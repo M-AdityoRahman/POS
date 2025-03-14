@@ -11,19 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('t_penjualan_detail', function (Blueprint $table) {
-            $table->id('penjualan_detail_id');
-            $table->unsignedBigInteger('penjualan_id');
-            $table->unsignedBigInteger('barang_id');
-            $table->integer('jumlah');
-            $table->decimal('subtotal', 10, 2);
+        Schema::create('t_penjualan', function (Blueprint $table) {
+            $table->id('penjualan_id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('pembeli', 100);
+            $table->string('penjualan_kode', 50);
+            $table->dateTime('penjualan_tanggal');
             $table->timestamps();
-        
-            // Foreign Keys
-            $table->foreign('penjualan_id')->references('penjualan_id')->on('t_penjualan')->onDelete('cascade');
-            $table->foreign('barang_id')->references('barang_id')->on('m_barang')->onDelete('cascade');
-        });
-    }
+    });
+}
 
     /**
      * Reverse the migrations.

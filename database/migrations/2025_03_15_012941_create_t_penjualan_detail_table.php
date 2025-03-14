@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('t_penjualan', function (Blueprint $table) {
-            $table->id('penjualan_id');
-            $table->date('tanggal_penjualan');
-            $table->decimal('total_harga', 10, 2);
+        Schema::create('t_penjualan_detail', function (Blueprint $table) {
+            $table->id('penjualan_detail_id');
+            $table->unsignedBigInteger('penjualan_id');
+            $table->unsignedBigInteger('barang_id');
+            $table->decimal('harga', 10, 2);
+            $table->integer('jumlah');
             $table->timestamps();
         });
     }
