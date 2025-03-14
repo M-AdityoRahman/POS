@@ -15,11 +15,11 @@ class KategoriSeeder extends Seeder
     {
         
         $data = [
-            ['kategori_nama' => 'Elektronik'],
-            ['kategori_nama' => 'Pakaian'],
-            ['kategori_nama' => 'Makanan'],
-            ['kategori_nama' => 'Peralatan Rumah'],
-            ['kategori_nama' => 'Mainan'],
+            ['kategori_kode' => 'ELEC', 'kategori_nama' => 'Elektronik'],
+            ['kategori_kode' => 'PAKA', 'kategori_nama' => 'Pakaian'],
+            ['kategori_kode' => 'MAKA', 'kategori_nama' => 'Makanan'],
+            ['kategori_kode' => 'RUMA', 'kategori_nama' => 'Peralatan Rumah'],
+            ['kategori_kode' => 'MAIN', 'kategori_nama' => 'Mainan'],
         ];
 
         DB::table('m_kategori')->insert($data);
