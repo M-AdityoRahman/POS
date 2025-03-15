@@ -22,13 +22,13 @@ class UserController extends Controller
         'nama' => 'Manager 3',
         'password' => Hash::make('12345')
     ];
-
+    UserModel::where('username', 'manager_tiga')->delete();
     UserModel::create($data);
 
-    $user = UserModel::findOr(20,['username', 'nama'], function(){
-        about(404);
-    });
-    return view('user', ['data' => $user]);
+    $user = UserModel::where('username', 'manager9')->firstOrFail();
+
+    return view('user', ['data' => $user]); 
 }
 
 }
+
