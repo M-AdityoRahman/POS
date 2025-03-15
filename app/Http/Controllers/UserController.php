@@ -22,13 +22,19 @@ class UserController extends Controller
         'nama' => 'Manager 3',
         'password' => Hash::make('12345')
     ];
-    UserModel::where('username', 'manager_tiga')->delete();
-    UserModel::create($data);
 
-    $user = UserModel::where('username', 'manager9')->firstOrFail();
+    // Gunakan updateOrCreate agar tidak menambah data duplikat
+    UserModel::updateOrCreate(
+        ['username' => 'manager_tiga'], 
+        $data
+    );
 
-    return view('user', ['data' => $user]); 
+    // Hitung jumlah user dengan level_id = 2
+    $userCount = UserModel::where('level_id', '2')->count();
+
+    return view('user', ['data' => $userCount]); 
 }
+
 
 }
 

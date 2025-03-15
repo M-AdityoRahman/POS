@@ -13,10 +13,10 @@
             <th>ID Level Pengguna</th>
         </tr>
         <tr>
-            <td>{{ $data->user_id }}</td> 
-            <td>{{ $data->username }}</td>
-            <td>{{ $data->nama }}</td>
-            <td>{{ $data->level_id }}</td>
+            <td>{{ $data }}</td> 
+            <td>{{ $data }}</td>
+            <td>{{ $data }}</td>
+            <td>{{ $data }}</td>
         </tr>
     </table>
 </body>
