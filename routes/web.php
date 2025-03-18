@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController; //user controller
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangController; // barang controller
+use App\Http\Controllers\SupplierController; // supplier controller
 
 // Halaman Home
 // Route::get('/', [HomeController::class, 'index']);
@@ -21,6 +23,7 @@ Route::prefix('category')->group(function () {
     Route::get('/baby-kid', [ProductController::class, 'babyKid']);
 });
 
+// Halaman User
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', [UserController::class, 'index']); // menampilkan halaman awal user
     Route::post('/list', [UserController::class, 'list']); // menampilkan data user dalam bentuk json untuk datatables
@@ -32,6 +35,51 @@ Route::group(['prefix' => 'user'], function () {
     Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
 });
 
+// Halaman Barang
+Route::prefix('barang')->group(function () {
+    Route::get('/', [BarangController::class, 'index'])->name('barang.index');
+    Route::get('/create', [BarangController::class, 'create'])->name('barang.create');
+    Route::post('/', [BarangController::class, 'store'])->name('barang.store');
+    Route::get('/{id}', [BarangController::class, 'show'])->name('barang.show');
+    Route::get('/{id}/edit', [BarangController::class, 'edit'])->name('barang.edit');
+    Route::put('/{id}', [BarangController::class, 'update'])->name('barang.update');
+    Route::delete('/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+});
+
+// Halaman Level
+Route::group(['prefix' => 'level'], function () {
+    Route::get('/', [LevelController::class, 'index']);          // Menampilkan halaman awal level
+    Route::post('/list', [LevelController::class, 'list']);      // Menampilkan data level dalam bentuk JSON untuk DataTables
+    Route::get('/create', [LevelController::class, 'create']);   // Menampilkan halaman form tambah level
+    Route::post('/', [LevelController::class, 'store']);         // Menyimpan data level baru
+    Route::get('/{id}', [LevelController::class, 'show']);       // Menampilkan detail level
+    Route::get('/{id}/edit', [LevelController::class, 'edit']);  // Menampilkan halaman form edit level
+    Route::put('/{id}', [LevelController::class, 'update']);     // Menyimpan perubahan data level
+    Route::delete('/{id}', [LevelController::class, 'destroy']); // Menghapus data level
+});
+
+//Halaman Kategori
+Route::prefix('kategori')->group(function () {
+    Route::get('/', [KategoriController::class, 'index'])->name('kategori.index'); // Halaman daftar kategori
+    Route::get('/list', [KategoriController::class, 'list'])->name('kategori.list'); // DataTables JSON
+    Route::get('/create', [KategoriController::class, 'create'])->name('kategori.create'); // Form tambah kategori
+    Route::post('/', [KategoriController::class, 'store'])->name('kategori.store'); // Simpan kategori baru
+    Route::get('/{id}', [KategoriController::class, 'show'])->name('kategori.show'); // Detail kategori
+    Route::get('/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit'); // Form edit kategori
+    Route::put('/{id}', [KategoriController::class, 'update'])->name('kategori.update'); // Simpan perubahan kategori
+    Route::delete('/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy'); // Hapus kategori
+});
+
+//Halaman Supplier
+Route::prefix('supplier')->group(function () {
+    Route::get('/', [SupplierController::class, 'index'])->name('supplier.index');
+    Route::get('/create', [SupplierController::class, 'create'])->name('supplier.create');
+    Route::post('/', [SupplierController::class, 'store'])->name('supplier.store');
+    Route::get('/{id}', [SupplierController::class, 'show'])->name('supplier.show'); // Perbaikan di sini
+    Route::get('/{id}/edit', [SupplierController::class, 'edit'])->name('supplier.edit');
+    Route::put('/{id}', [SupplierController::class, 'update'])->name('supplier.update');
+    Route::delete('/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+});
 
 // Halaman User dengan Parameter ID & Name
 Route::get('/user/{id}/name/{name}', [UserController::class, 'profile']);
