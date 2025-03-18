@@ -17,7 +17,7 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  @include('layouts.navbar')
+  @include('layouts.header')
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
