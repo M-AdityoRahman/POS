@@ -1,54 +1,81 @@
 @extends('layouts.template')
 
 @section('content')
-<div class="card card-outline card-primary">
-    <div class="card-header">
-        <h3 class="card-title">{{ $page->title }}</h3>
-        <div class="card-tools">
-            <a href="{{ route('supplier.create') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus"></i> Tambah Supplier
-            </a>
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            <h3 class="card-title">{{ $page->title }}</h3>
+            <div class="card-tools">
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('supplier/create') }}">Tambah</a>
+                <button onclick="modalAction('{{ url('supplier/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah
+                    Ajax</button>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_supplier">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Kode</th>
+                        <th>Nama</th>
+                        <th>Alamat</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
-    <div class="card-body">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
-
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Kode Supplier</th>
-                    <th>Nama Supplier</th>
-                    <th>Alamat</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($supplier as $key => $item)
-                <tr>
-                    <td>{{ $key + 1 }}</td>
-                    <td>{{ $item->supplier_kode }}</td>
-                    <td>{{ $item->supplier_nama }}</td>
-                    <td>{{ $item->supplier_alamat }}</td>
-                    <td>
-                        <a href="{{ url('supplier/' . $item->supplier_id) }}" class="btn btn-info btn-sm">Detail</a>
-                        <a href="{{ url('supplier/' . $item->supplier_id . '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ url('supplier/' . $item->supplier_id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus supplier ini?')">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
+    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static"
+        data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
+
+@push('js')
+    <script>
+        function modalAction(url = '') {
+            $('#myModal').load(url, function() {
+                $('#myModal').modal('show');
+            });
+        }
+        let dataSupplier;
+        $(document).ready(function() {
+            dataSupplier = $('#table_supplier').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ url('/supplier') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'supplier_kode',
+                        name: 'supplier_kode'
+                    },
+                    {
+                        data: 'supplier_nama',
+                        name: 'supplier_nama'
+                    },
+                    {
+                        data: 'supplier_alamat',
+                        name: 'supplier_alamat'
+                    },
+                    {
+                        data: 'aksi',
+                        name: 'aksi',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+        });
+    </script>
+@endpush

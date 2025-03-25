@@ -64,14 +64,15 @@
                 $('#myModal').modal('show');
             });
         }
+        var dataUser;
         $(document).ready(function () {
-            var dataUser = $('#table_user').DataTable({
+            dataUser = $('#table_user').DataTable({
                 // serverSide: true, jika ingin menggunakan server side processing
                 serverSide: true,
                 ajax: {
                     "url": "{{ url('user/list') }}",
                     "dataType": "json",
-                    "type": "POST"
+                    "type": "POST",
                         "data": function (data) {
                         data.level_id = $('#level_id').val();
                     }
