@@ -51,12 +51,16 @@ ack">
                             </div>
                             <small id="error-password" class="error-text text-danger"></small>
                         </div>
+                        <div class="col-4">
+                            <button type="" class="btn"><a href="{{ url('register') }}" class="">Register</a></button>
+                        </div>
                         <div class="row">
                             <div class="col-8">
                                 <div class="icheck-primary">
                                     <input type="checkbox" id="remember"><label for="remember">Remember Me</label>
                                 </div>
                             </div>
+                            
                             <!-- /.col -->
                             <div class="col-4">
                                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>

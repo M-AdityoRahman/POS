@@ -16,13 +16,14 @@ use App\Http\Controllers\AuthController;
 Route::pattern('id', '[0-9]+');
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::get('register', [AuthController::class, 'register'])->name('register');
 Route::post('login', [AuthController::class, 'postlogin']);
+Route::post('register', [AuthController::class, 'postregister']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
 
 
-    Route::get('/', [WelcomeController::class, 'index']);
     // Halaman User
     Route::middleware(['authorize:ADM'])->group(function () {
     Route::group(['prefix' => 'user'], function () {
@@ -135,6 +136,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+    Route::get('/', [WelcomeController::class, 'index']);
 
 // // Halaman User dengan Parameter ID & Name
 // Route::get('/user/{id}/name/{name}', [UserController::class, 'profile']);
