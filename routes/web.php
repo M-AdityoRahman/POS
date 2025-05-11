@@ -20,6 +20,9 @@ Route::post('login', [AuthController::class, 'postlogin']);
 Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
+
+
+    Route::get('/', [WelcomeController::class, 'index']);
     // Halaman User
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [UserController::class, 'index']); // menampilkan halaman awal user
@@ -55,22 +58,24 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']);
     });
 
-    // Halaman Level
-    Route::group(['prefix' => 'level'], function () {
-        Route::get('/', [LevelController::class, 'index']);          // Menampilkan halaman awal level
-        Route::post('/list', [LevelController::class, 'list']);      // Menampilkan data level dalam bentuk JSON untuk DataTables
-        Route::get('/create', [LevelController::class, 'create']);   // Menampilkan halaman form tambah level
-        Route::post('/', [LevelController::class, 'store']);         // Menyimpan data level baru
-        Route::get('/create_ajax', [LevelController::class, 'create_ajax']); // Menampilkan halaman form tambah level Ajax
-        Route::get('/{id}', [LevelController::class, 'show']);       // Menampilkan detail level
-        Route::get('/{id}/edit', [LevelController::class, 'edit']);  // Menampilkan halaman form edit level
-        Route::put('/{id}', [LevelController::class, 'update']);     // Menyimpan perubahan data level
-        Route::delete('/{id}', [LevelController::class, 'destroy']); // Menghapus data level
-        Route::post('/ajax', [LevelController::class, 'store_ajax']);        // Menyimpan data level baru Ajax
-        Route::get('/{id}/edit_ajax', [LevelController::class, 'edit_ajax']); // Menampilkan halaman form edit level Ajax
-        Route::put('/{id}/update_ajax', [LevelController::class, 'update_ajax']); // Menyimpan perubahan data level Ajax
-        Route::get('/{id}/delete_ajax', [LevelController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete level Ajax
-        Route::delete('/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // Untuk hapus data level Ajax
+    Route::middleware(['authorize:ADM'])->group(function () {
+        // Halaman Level
+        Route::group(['prefix' => 'level'], function () {
+            Route::get('/', [LevelController::class, 'index']);          // Menampilkan halaman awal level
+            Route::post('/list', [LevelController::class, 'list']);      // Menampilkan data level dalam bentuk JSON untuk DataTables
+            Route::get('/create', [LevelController::class, 'create']);   // Menampilkan halaman form tambah level
+            Route::post('/', [LevelController::class, 'store']);         // Menyimpan data level baru
+            Route::get('/create_ajax', [LevelController::class, 'create_ajax']); // Menampilkan halaman form tambah level Ajax
+            Route::get('/{id}', [LevelController::class, 'show']);       // Menampilkan detail level
+            Route::get('/{id}/edit', [LevelController::class, 'edit']);  // Menampilkan halaman form edit level
+            Route::put('/{id}', [LevelController::class, 'update']);     // Menyimpan perubahan data level
+            Route::delete('/{id}', [LevelController::class, 'destroy']); // Menghapus data level
+            Route::post('/ajax', [LevelController::class, 'store_ajax']);        // Menyimpan data level baru Ajax
+            Route::get('/{id}/edit_ajax', [LevelController::class, 'edit_ajax']); // Menampilkan halaman form edit level Ajax
+            Route::put('/{id}/update_ajax', [LevelController::class, 'update_ajax']); // Menyimpan perubahan data level Ajax
+            Route::get('/{id}/delete_ajax', [LevelController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete level Ajax
+            Route::delete('/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // Untuk hapus data level Ajax
+        });
     });
 
     //Halaman Kategori
@@ -112,31 +117,30 @@ Route::middleware(['auth'])->group(function () {
 
 // Halaman Home
 // Route::get('/', [HomeController::class, 'index']);
-Route::get('/', [WelcomeController::class, 'index']);
 
 // Halaman Products (Dengan Prefix)
-Route::prefix('category')->group(function () {
-    Route::get('/food-beverage', [ProductController::class, 'foodBeverage']);
-    Route::get('/beauty-health', [ProductController::class, 'beautyHealth']);
-    Route::get('/home-care', [ProductController::class, 'homeCare']);
-    Route::get('/baby-kid', [ProductController::class, 'babyKid']);
-});
+// Route::prefix('category')->group(function () {
+//     Route::get('/food-beverage', [ProductController::class, 'foodBeverage']);
+//     Route::get('/beauty-health', [ProductController::class, 'beautyHealth']);
+//     Route::get('/home-care', [ProductController::class, 'homeCare']);
+//     Route::get('/baby-kid', [ProductController::class, 'babyKid']);
+// });
 
 
 
 
-// Halaman User dengan Parameter ID & Name
-Route::get('/user/{id}/name/{name}', [UserController::class, 'profile']);
+// // Halaman User dengan Parameter ID & Name
+// Route::get('/user/{id}/name/{name}', [UserController::class, 'profile']);
 
 // Halaman Penjualan (POS)
-Route::get('/sales', [SalesController::class, 'index']);
+// Route::get('/sales', [SalesController::class, 'index']);
 
-Route::get('/level', [LevelController::class, 'index']);
-Route::get('/kategori', [KategoriController::class, 'index']);
-Route::get('/user', [UserController::class, 'index']);
-Route::get('/user/tambah', [UserController::class, 'tambah']);
-Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']);
-Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
-Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
+// Route::get('/level', [LevelController::class, 'index']);
+// Route::get('/kategori', [KategoriController::class, 'index']);
+// Route::get('/user', [UserController::class, 'index']);
+// Route::get('/user/tambah', [UserController::class, 'tambah']);
+// Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']);
+// Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
+// Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
 
 
