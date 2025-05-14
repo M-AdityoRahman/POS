@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     // Halaman Barang
     Route::prefix('barang')->group(function () {
         Route::get('/', [BarangController::class, 'index'])->name('barang.index');
+        Route::post('/list', [BarangController::class, 'list']);
         Route::get('/create', [BarangController::class, 'create'])->name('barang.create');
         Route::post('/', [BarangController::class, 'store'])->name('barang.store');
         Route::get('/create_ajax', [BarangController::class, 'create_ajax']);
@@ -59,6 +60,8 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{id}/update_ajax', [BarangController::class, 'update_ajax']);
         Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']);
         Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']);
+        Route::get('/import', [BarangController::class, 'import']); // ajax form upload excel
+        Route::post('/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
     });
 
     Route::middleware(['authorize:ADM'])->group(function () {
