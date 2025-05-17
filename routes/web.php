@@ -66,6 +66,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/export_pdf', [BarangController::class, 'export_pdf']); // ajax pdf
     });
 
+    // untuk update profile
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/update_profile', [UserController::class, 'update_profile']); // menampilkan halaman form edit profile
+        Route::post('/update_profile', [UserController::class, 'update_profile_post']); // menyimpan perubahan data profile
+    });
+
     Route::middleware(['authorize:ADM'])->group(function () {
         // Halaman Level
         Route::group(['prefix' => 'level'], function () {
