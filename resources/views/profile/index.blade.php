@@ -41,22 +41,22 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="profile_image" class="col-md-4 col-form-label text-md-right">Foto
+                                <label for="image" class="col-md-4 col-form-label text-md-right">Foto
                                     Profile</label>
                                 <div class="col-md-6">
-                                    <input id="profile_image" type="file"
-                                        class="form-control-file @error('profile_image') is-invalid @enderror"
-                                        name="profile_image">
+                                    <input id="image" type="file"
+                                        class="form-control-file @error('image') is-invalid @enderror"
+                                        name="image">
 
-                                    @error('profile_image')
+                                    @error('image')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
 
-                                    @if (auth()->user()->profile_image)
+                                    @if (auth()->user()-image)
                                         <div class="mt-2">
-                                            <img src="{{ asset('storage/' . auth()->user()->profile_image) }}"
+                                            <img src="{{ asset('storage/' . auth()->user()->image) }}"
                                                 alt="Current Profile" class="img-thumbnail" id="imagePreview"
                                                 width="150">
                                         </div>
@@ -81,7 +81,7 @@
 @push('js')
     <script>
         $(document).ready(function() {
-            $('#profile_image').change(function(e) {
+            $('#image').change(function(e) {
                 console.log('File selected:', this.files[0]);
                 if (this.files && this.files[0]) {
                     var reader = new FileReader();
