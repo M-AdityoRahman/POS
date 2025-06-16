@@ -54,7 +54,7 @@
                                         </span>
                                     @enderror
 
-                                    @if (auth()->user()-image)
+                                    @if (auth()->user()-$image)
                                         <div class="mt-2">
                                             <img src="{{ asset('storage/' . auth()->user()->image) }}"
                                                 alt="Current Profile" class="img-thumbnail" id="imagePreview"
